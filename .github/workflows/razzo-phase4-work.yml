@@ -1,0 +1,38 @@
+name: RAZZO Phase 4 Real Work
+on:
+  push:
+    paths: ['.razzo/work-orders/*.json']
+permissions: {contents: read}
+jobs:
+  execute-real-work:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 2}
+      - name: Execute exact-ref file digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          ORDER=$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^.razzo/work-orders/.*\.json$' | head -n1)
+          test -n "$ORDER"
+          ORDER="$ORDER" python - <<'PY'
+          import hashlib,json,os,re,subprocess
+          from pathlib import Path
+          o=json.loads(Path(os.environ['ORDER']).read_text(encoding='utf-8-sig'))
+          req={'schema','execution_id','work_item_id','project_id','generation_id','source_repository','input_sha','target_path','collision_domain','idempotency_key'}
+          if req-set(o): raise SystemExit('missing fields')
+          if o['schema']!='razzo.homo-novus.phase4-work.v1' or not re.fullmatch(r'[0-9a-f]{40}',str(o['input_sha'])): raise SystemExit('invalid contract')
+          t=str(o['target_path'])
+          if t.startswith('/') or '..' in Path(t).parts: raise SystemExit('unsafe target')
+          subprocess.run(['git','clone','--filter=blob:none','--no-checkout',f"https://github.com/{o['source_repository']}.git",'source'],check=True)
+          subprocess.run(['git','-C','source','checkout','--detach',o['input_sha']],check=True)
+          if subprocess.check_output(['git','-C','source','rev-parse','HEAD'],text=True).strip()!=o['input_sha']: raise SystemExit('sha mismatch')
+          d=hashlib.sha256((Path('source')/t).read_bytes()).hexdigest()
+          r={'schema':'razzo.homo-novus.phase4-receipt.v1','status':'HEALTHY','verification_state':'REAL_WORK_EXACT_REF_VERIFIED','execution_id':o['execution_id'],'work_item_id':o['work_item_id'],'project_id':o['project_id'],'generation_id':o['generation_id'],'source_repository':o['source_repository'],'input_sha':o['input_sha'],'target_path':t,'output_sha256':d,'collision_domain':o['collision_domain'],'idempotency_key':o['idempotency_key'],'shard_repository':os.environ['GITHUB_REPOSITORY'],'worker_sha':os.environ['GITHUB_SHA'],'product_progress':False}
+          Path('receipts').mkdir(); Path(f"receipts/{o['execution_id']}.json").write_text(json.dumps(r,sort_keys=True,indent=2)+'\n')
+          print('REAL WORK COMPLETE',o['work_item_id'],d)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: razzo-phase4-receipt-${{ github.sha }}
+          path: receipts/*.json
