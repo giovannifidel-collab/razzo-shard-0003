@@ -43,3 +43,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: razzo-receipt-${{ github.event.client_payload.workItemId }}, path: receipt.json}
+# actions-enabled verification 2026-08-04T20:06+02:00
