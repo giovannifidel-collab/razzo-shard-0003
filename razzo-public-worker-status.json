@@ -1,15 +1,18 @@
 {
-  "schema": "razzo.public-worker-status.v1",
-  "state": "completed",
-  "workflowRunId": "30938310077",
-  "cycleId": "razzo-acf70306d7a7",
-  "workItemId": "a09f9275953a2c5b9f078d23",
+  "schema": "razzo.public-worker-status.v2",
+  "state": "started",
+  "workflowRunId": "30960437977",
+  "cycleId": "razzo-9fc39d8816c4",
+  "generationId": "razzo-9fc39d8816c4:g1",
+  "workItemId": "887110bff38b24fd770ac94e",
   "shard": "razzo-shard-0003",
   "projectId": "project-giovanni",
   "repository": "giovannifidel-collab/project-giovanni",
+  "title": "Project Giovanni Factory regression suite",
+  "kind": "verification",
   "exactInputSha": "0cec483667809d44e72f8e4e514f46cd29399379",
-  "observedSha": "0cec483667809d44e72f8e4e514f46cd29399379",
-  "durationSeconds": 1.156,
+  "observedSha": null,
+  "durationSeconds": null,
   "error": null,
-  "updatedEpoch": 1785867757.0616145
+  "updatedEpoch": 1785886462.8460603
 }
