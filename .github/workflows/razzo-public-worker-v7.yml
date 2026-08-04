@@ -1,11 +1,35 @@
 name: RAZZO Public Worker V7
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/razzo-public-worker-v7.yml']
+  workflow_dispatch:
   repository_dispatch:
     types: [razzo-work-item]
 permissions:
   contents: write
 jobs:
+  self-test:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Persist Actions self-test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import base64,json,os,urllib.error,urllib.request,time
+          status={'schema':'razzo.public-worker-status.v1','state':'actions-self-test-green','workflowRunId':os.environ['GITHUB_RUN_ID'],'shard':os.environ['GITHUB_REPOSITORY'].split('/')[-1],'updatedEpoch':time.time()}
+          repo=os.environ['GITHUB_REPOSITORY']; url=f'https://api.github.com/repos/{repo}/contents/razzo-public-worker-status.json'; headers={'Authorization':f"Bearer {os.environ['GITHUB_TOKEN']}",'Accept':'application/vnd.github+json','Content-Type':'application/json'}; sha=None
+          try: sha=json.load(urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=30))['sha']
+          except urllib.error.HTTPError as e:
+              if e.code!=404: raise
+          body={'message':'RAZZO Actions self-test green','content':base64.b64encode((json.dumps(status,indent=2)+'\n').encode()).decode(),'branch':'main'}
+          if sha: body['sha']=sha
+          urllib.request.urlopen(urllib.request.Request(url,data=json.dumps(body).encode(),headers=headers,method='PUT'),timeout=30).read()
+          PY
   execute:
+    if: github.event_name == 'repository_dispatch'
     runs-on: ubuntu-latest
     env:
       RAZZO_WORK_ITEM: ${{ toJson(github.event.client_payload) }}
