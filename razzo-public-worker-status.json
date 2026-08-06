@@ -1,6 +1,6 @@
 {
   "schema": "razzo.public-worker-status.v2",
-  "state": "started",
+  "state": "failed",
   "workflowRunId": "31112647372",
   "cycleId": "razzo-061f1eca2be5",
   "generationId": "razzo-061f1eca2be5:g1",
@@ -11,8 +11,8 @@
   "title": "Implement and verify one authenticated durable result write/reopen path tied to exact plan and session version.",
   "kind": "macrocycle-closure",
   "exactInputSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "observedSha": null,
-  "durationSeconds": null,
-  "error": null,
-  "updatedEpoch": 1786027690.54281
+  "observedSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
+  "durationSeconds": 57.2,
+  "error": "command cmd-2 failed with exit code 1; output digest 12c43f866ba395ec8ac41d6f06102ee99b5d0af81efbed9154987e2eb81b5b44",
+  "updatedEpoch": 1786027749.261475
 }
