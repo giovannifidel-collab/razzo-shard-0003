@@ -1,6 +1,6 @@
 {
   "schema": "razzo.public-worker-status.v2",
-  "state": "started",
+  "state": "completed",
   "workflowRunId": "31114295620",
   "cycleId": "razzo-d2018d381336",
   "generationId": "razzo-d2018d381336:g1",
@@ -11,8 +11,8 @@
   "title": "Implement and verify one authenticated durable result write/reopen path tied to exact plan and session version.",
   "kind": "macrocycle-closure",
   "exactInputSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "observedSha": null,
-  "durationSeconds": null,
+  "observedSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
+  "durationSeconds": 62.055,
   "error": null,
-  "updatedEpoch": 1786028906.9103348
+  "updatedEpoch": 1786028970.625568
 }
