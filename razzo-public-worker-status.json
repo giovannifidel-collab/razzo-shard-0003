@@ -1,18 +1,18 @@
 {
   "schema": "razzo.public-worker-status.v2",
-  "state": "completed",
-  "workflowRunId": "31106683473",
-  "cycleId": "razzo-97d202b8af66",
-  "generationId": "razzo-97d202b8af66:g1",
-  "workItemId": "b53888dbda936172877f3ae7",
+  "state": "started",
+  "workflowRunId": "31108973938",
+  "cycleId": "razzo-07a6974cb9f7",
+  "generationId": "razzo-07a6974cb9f7:g1",
+  "workItemId": "452753908d54eece21df4625",
   "shard": "razzo-shard-0003",
   "projectId": "project-giovanni",
   "repository": "giovannifidel-collab/project-giovanni",
-  "title": "Project Giovanni Factory regression suite",
-  "kind": "verification",
+  "title": "Implement and verify one authenticated durable result write/reopen path tied to exact plan and session version.",
+  "kind": "macrocycle-closure",
   "exactInputSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "observedSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "durationSeconds": 4.932,
+  "observedSha": null,
+  "durationSeconds": null,
   "error": null,
-  "updatedEpoch": 1786023373.5354178
+  "updatedEpoch": 1786025058.6996188
 }
