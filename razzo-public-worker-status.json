@@ -1,18 +1,18 @@
 {
   "schema": "razzo.public-worker-status.v2",
-  "state": "failed",
-  "workflowRunId": "31110576152",
-  "cycleId": "razzo-ccbb314bbe3d",
-  "generationId": "razzo-ccbb314bbe3d:g1",
-  "workItemId": "3dab4d26e64b9ee35c604401",
+  "state": "started",
+  "workflowRunId": "31112647372",
+  "cycleId": "razzo-061f1eca2be5",
+  "generationId": "razzo-061f1eca2be5:g1",
+  "workItemId": "b7ebbe3aeb008b5d1c2711d6",
   "shard": "razzo-shard-0003",
   "projectId": "project-giovanni",
   "repository": "giovannifidel-collab/project-giovanni",
   "title": "Implement and verify one authenticated durable result write/reopen path tied to exact plan and session version.",
   "kind": "macrocycle-closure",
   "exactInputSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "observedSha": "c83b962268abe4586731bb96ff0777cdaca754fd",
-  "durationSeconds": 5.91,
-  "error": "command cmd-2 failed with exit code 127; output digest f7a0e42d1eb1aa2ceed899b102ecc9b532ca8a82b852748f4d5ba92246122807",
-  "updatedEpoch": 1786026219.659962
+  "observedSha": null,
+  "durationSeconds": null,
+  "error": null,
+  "updatedEpoch": 1786027690.54281
 }
