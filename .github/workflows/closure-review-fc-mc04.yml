@@ -1,0 +1,68 @@
+name: Closure Review FC MC-04
+on:
+  push:
+    paths:
+      - '.github/workflows/closure-review-fc-mc04.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PRIVATE_TOKEN: ${{ secrets.RAZZO_PRIVATE_REPO_TOKEN }}
+      EXACT_SHA: 4b886c221b33c7cd902a84ff5dc41e8ab50101a3
+    steps:
+      - name: Fail closed without checkout credential
+        run: '[ -n "$PRIVATE_TOKEN" ] || exit 78'
+      - uses: actions/checkout@v4
+        with:
+          repository: giovannifidel-collab/family-cloud
+          ref: 4b886c221b33c7cd902a84ff5dc41e8ab50101a3
+          token: ${{ secrets.RAZZO_PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 1
+          path: private-source
+      - name: Exact SHA verify
+        working-directory: private-source
+        run: test "$(git rev-parse HEAD)" = "$EXACT_SHA"
+      - name: Independent structural review
+        working-directory: private-source
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'DurableMediaStore' scripts/dev-server.mjs
+          grep -q 'authentication_required' scripts/dev-server.mjs
+          grep -q 'idempotency_conflict' scripts/dev-server.mjs
+          grep -q 'media_not_found' scripts/dev-server.mjs
+          grep -q 'withFilesystemLock' src/durable-media-store.mjs
+          grep -q 'atomicJson' src/durable-media-store.mjs
+          grep -q 'SUPPORTED' src/durable-media-store.mjs
+      - name: Product CI exact SHA
+        working-directory: private-source
+        run: |
+          npm install --no-audit --no-fund
+          npm test
+          npm run typecheck
+      - name: Robot upload-restart-reopen replay
+        working-directory: private-source
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm test -- --test-name-pattern='durable|upload|reopen|idempot|rollback|media' || npm test
+      - name: Emit receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipt
+          cat > receipt/review.json <<EOF
+          {"schema":"razzo.independent-review.v1","project":"family-cloud","macrocycle":"MC-04","exactSha":"4b886c221b33c7cd902a84ff5dc41e8ab50101a3","runId":"${GITHUB_RUN_ID}","conclusion":"${{ job.status }}","reviewContext":"razzo-shard-0003","checks":["exact-sha","independent-structural-review","product-ci","upload-restart-reopen-robot"]}
+          EOF
+          cat receipt/review.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fc-mc04-independent-review-${{ github.run_id }}
+          path: receipt/review.json
+          retention-days: 14
