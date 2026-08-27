@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "id": "wave1-vendor-lavender",
+  "task": "git_probe",
+  "repo": "https://github.com/crdroidandroid/proprietary_vendor_xiaomi_lavender.git",
+  "revision": "483e3e7ca5828c54d8b4408b87ee14069a8d027b"
+}
