@@ -1,0 +1,66 @@
+{
+  "fileCount": 1335,
+  "gitMetadataGiB": 0.068,
+  "privateGioSourcePresent": false,
+  "publicInputsOnly": true,
+  "repository": "https://github.com/crdroidandroid/android_build.git",
+  "requestedRef": "14.0",
+  "resolvedSha": "a2d522c6f1421084921c8151ce90c2fe47901b5e",
+  "schema": "gio.os.public-source-probe.v1",
+  "signingKeysPresent": false,
+  "targetMaxGiB": 12.5,
+  "taskId": "build-make",
+  "topDirectories": [
+    {
+      "kib": 13352,
+      "path": "tools"
+    },
+    {
+      "kib": 2452,
+      "path": "core"
+    },
+    {
+      "kib": 1132,
+      "path": "target"
+    },
+    {
+      "kib": 144,
+      "path": "tests"
+    },
+    {
+      "kib": 100,
+      "path": "teams"
+    },
+    {
+      "kib": 64,
+      "path": "envsetup.sh"
+    },
+    {
+      "kib": 40,
+      "path": "common"
+    },
+    {
+      "kib": 40,
+      "path": "Changes.md"
+    },
+    {
+      "kib": 40,
+      "path": "CleanSpec.mk"
+    },
+    {
+      "kib": 32,
+      "path": "ci"
+    },
+    {
+      "kib": 12,
+      "path": "packaging"
+    },
+    {
+      "kib": 8,
+      "path": "buildspec.mk.default"
+    }
+  ],
+  "withinTarget": true,
+  "workingSetGiB": 0.085,
+  "workingSetKiB": 88868
+}
